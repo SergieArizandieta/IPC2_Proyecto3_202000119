@@ -33,6 +33,12 @@ def curriculum(request):
 
     return HttpResponse(documento)
 
+def curriculumNew(request):
+
+    diccionario = {} 
+    return render(request,"curriculumNew.html",diccionario)
+
+
 def textvaribles(request):
 
     p1 = Persona("Estudainte Sergie", "Arizandieta")
