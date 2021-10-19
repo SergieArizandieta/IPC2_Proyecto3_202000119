@@ -1,0 +1,30 @@
+<html>
+    <body>
+
+    <h1 style="color:red"> 
+    El nombre de mi persona es: {{diccionario.nombre_persona}} {{diccionario.apellido_persona}} y es : {{diccionario.Fecha_actual}}
+    </h1>
+    <br>
+    {% if diccionario.nombre_persona == 'Estudainte Sergie' %}
+        <p>El estudiante es el mejor dle mundo</p>
+
+    {% else %}
+        <p>El estudiante NO es el mejor del mundo</p>
+    {% endif %}
+
+    <br>
+    <p><strong>Temas del curso</strong></p>
+    <h2>
+        <ul>
+        {% if diccionario.temas %}
+            {% for elTema in diccionario.temas %}
+                <li>{{elTema}}</li>
+            {% endfor %}
+        {% else %}
+            <p>No hay elemntos que moestrar</p>
+        {% endif %}
+        </ul>
+
+    </h2>
+    </body>
+    </html>
