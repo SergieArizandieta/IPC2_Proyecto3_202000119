@@ -1,0 +1,257 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Components / Accordion - NiceAdmin Bootstrap Template</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  
+  <link href=" {% static 'bootstrap.min.css' %}" rel="stylesheet">
+  <link href=" {% static 'bootstrap-icons.css' %}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href=" {% static 'style.css' %}" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: NiceAdmin - v2.1.0
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+ 
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+
+        <li class="nav-item dropdown">
+          <a class="nav-link nav-icon">
+            <input type="file" name="avatar"  class="btn btn-primary" accept="application/xml, application/XML">
+           <!-- <button type="button" class="btn btn-primary">Cargar Archivo</button>-->
+          </a>
+        </li>
+
+        <li class="nav-item dropdown pe-3"><!--Peticiones-->
+
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+              <i class="bi bi-box"></i>
+            <span class="d-none d-md-block dropdown-toggle ps-2">Peticiones</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+         
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="#">
+                <span>Consultar Datos</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="#">
+                <span>Resumen de IVA por fecha y NIT</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="#">
+                <span>Resumen por rango de fechas</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="#">
+                <span>Grafica</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="#">
+                <span>Reporte en PDF</span>
+              </a>
+            </li>
+
+          </ul>
+        </li><!-- End Peticiones -->
+
+        <li class="nav-item dropdown pe-3"><!--Ayuda-->
+
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+              <i class="bi bi-info-circle text-primary"></i>
+            <span class="d-none d-md-block dropdown-toggle ps-2">Ayuda</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+         
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="#">
+                <span>visualizar información del estudiante</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="#">
+                <span>visualizar la documentación del programa</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+          </ul>
+        </li><!-- End Ayuda -->
+
+      </ul>
+    </nav>
+
+  </header><!-- End Header -->
+
+
+  
+
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Pagina de Inicio</h1>
+
+    </div><!-- End Page Title -->
+
+
+    <form id="post-form">
+         <!-- ======= Header ======= -->
+    <nav class="d-flex align-items-center">
+
+      <nav class="header-nav ms-auto">
+        <ul class="d-flex align-items-center">
+
+          
+          <li class="nav-item dropdown">
+            <a class="nav-link nav-icon">
+             
+              <button type="submit" class="btn btn-success rounded-pill" >Enviar</button>
+            </a>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link nav-icon">
+              <button type="button" class="btn btn-danger rounded-pill" id= "get-button"">Recibir</button>
+            </a>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link nav-icon">
+              <button type="button" class="btn btn-danger rounded-pill" id= "Limpiar" onclick="botonLimpiar()">Reset</button>
+            </a>
+          </li>
+
+        </ul>
+      </nav>
+
+    </nav><!-- End Header -->
+
+      <section class="section">
+        <div class="row">
+          <div class="col-lg-6">
+
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Entrada</h5>
+
+                <div class="card" >
+                  <div class="card-body">
+                    <h5 class="card-title"></h5>
+                    <textarea   rows="20" style=" width: 100%;"  id= "Exditor_Entrada" >{{data}}</textarea>
+                  
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-lg-6">
+
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Salida</h5>
+
+
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title"></h5>
+    
+                    <textarea disabled style=" width: 100%;" rows="20"  id= "Exditor_Salida">{{data}}</textarea>
+          
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+  </form>
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="copyright">
+      &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+    </div>
+    <div class="credits">
+      <!-- All the links in the footer should remain intact. -->
+      <!-- You can delete the links only if you purchased the pro version. -->
+      <!-- Licensing information: https://bootstrapmade.com/license/ -->
+      <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+      Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <script src="  {% static 'bootstrap.bundle.js' %}"></script>
+  <script src=" {% static 'javas.js' %}" ></script>
+
+
+</body>
+
+</html>

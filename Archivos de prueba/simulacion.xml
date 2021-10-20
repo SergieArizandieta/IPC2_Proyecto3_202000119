@@ -1,0 +1,8 @@
+<Simulacion>
+    <Nombre>Simulacion 1</Nombre>
+    <ListadoProductos>
+        <Producto>Guitarra</Producto>
+        <Producto>Piano</Producto>
+        
+    </ListadoProductos>
+</Simulacion> 
