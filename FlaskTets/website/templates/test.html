@@ -26,5 +26,59 @@
         </ul>
 
     </h2>
+    <br>
+
+    <form id="post-form">
+        <button type="submit" class="btn btn-success rounded-pill" >Enviar</button>
+        <textarea   rows="20" style=" width: 100%;" name="api-info"  id= "Exditor_Entrada">{{data}}</textarea>
+    </form>
+
+     <!-- Scrip para fromulario-->
+     <script>
+        let post_form = document.getElementById("post-form");
+        let get_button = document.getElementById("get-button");
+  
+        post_form.addEventListener("submit", (e) => {
+          e.preventDefault();
+          fetch("http://localhost:5000/events/", {
+            method: "POST",
+            headers: {
+              "Content-Type": "text/plain",
+            },
+            body: post_form.elements["api-info"].value,
+          }).then((res) => {
+            if (res.ok) {
+              recuperar()
+              console.log("Enviado")
+              
+            }
+          });
+        });
+  
+        
+        function recuperar(){ 
+            
+          console.log("Exito")
+         
+          fetch("http://localhost:5000/events/", {
+            method: "GET",
+            headers: {
+              "Content-Type": "text/plain",
+            },
+          })
+            .then((res) => {
+              if (res.ok) {
+                return res.text();
+              }
+            })
+            .then((res_txt) => {
+              console.log("reciido", res_txt)
+              window.location.reload();
+            });
+           
+        }
+      
+      
+      </script>
     </body>
     </html>

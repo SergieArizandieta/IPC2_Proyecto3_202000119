@@ -1,8 +1,8 @@
 from flask import Flask, Response, request
 from flask_cors import CORS
+from LecturaData import LecturaData
 
 
-from gestioncarga import *
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origin": "*"}})
 
@@ -17,17 +17,21 @@ def post_events():
     data.close()
     
     #print(request.data.decode('utf-8') + " data recibida")
-    cargarListasSimulacino()
+    LecturaData()
+
+    return Response(response='Confirmado')
     
-    return Response(response=request.data.decode('utf-8'),
+    ''' return Response(response=request.data.decode('utf-8'),
                     mimetype='text/plain',
-                    content_type='text/plain')
+                    content_type='text/plain')'''
 
 
 @app.route('/events/', methods=['GET'])
 def get_events():
-    data = open('data.xml', 'r+')
-    return Response(response=data.read(),
+    
+    data = open('data.xml', 'r',encoding="utf-8").read()
+  
+    return Response(response=data,
                     mimetype='text/plain',
                     content_type='text/plain')
 

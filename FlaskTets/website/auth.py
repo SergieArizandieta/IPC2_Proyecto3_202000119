@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template,request
+from flask import Flask, Response, request
 import datetime
 from flask.helpers import url_for
 
@@ -6,6 +7,10 @@ from werkzeug.utils import redirect
 
 
 auth = Blueprint('auth',__name__)
+
+
+from flask_cors import CORS
+cors = CORS(auth, resources={r"/*": {"origin": "*"}})
 
 class Persona(object):
     def __init__(self,nombre,apellido):
@@ -46,10 +51,15 @@ def envios():
       
     return  render_template("Main.html",data= user)
 
+temas = ["Plantillas","Modelos","FSormularios","Vistas","Despligue"]
+
+
+
 @auth.route('/test',methods=['GET','POST'])
 def test():
+    global temas
     p1 = Persona("Estudainte Sergie", "Arizandieta")
-    temas = ["Plantillas","Modelos","FSormularios","Vistas","Despligue"]
+    
     fecha_actual = datetime.datetime.now()
 
 
@@ -59,3 +69,5 @@ def test():
         "apellido_persona":p1.apellido,
         "Fecha_actual":fecha_actual, 
         "temas": temas } )
+
+
