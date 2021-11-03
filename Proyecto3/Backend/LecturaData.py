@@ -1,9 +1,10 @@
 import xml.etree.ElementTree as ET
 import re
 from Autorizaciones import Autorizasiones,DTE_individual
+import collections
+import xml.etree.cElementTree as ETS
 
 Ob_Autorizaciones = []
-
 
 def LecturaData():
     try:
@@ -12,11 +13,11 @@ def LecturaData():
         ruta = 'data.xml' 
         gestion = ET.parse(ruta)
         root = gestion.getroot()
-        Reconocer = True
+        
        
         for Solicitud in root:
             for dte in Solicitud.iter('DTE'):
-                Reconocer = True
+                
                 Errores = []
 
                 for time in dte.iter('TIEMPO'):
@@ -27,7 +28,7 @@ def LecturaData():
                         CrearData(fecha)
                     else:
                         Errores.append('error')
-                        Reconocer = False
+                       
                         print("errrsdkjasdk")
                     #print(timepo)  
 
@@ -39,7 +40,7 @@ def LecturaData():
                             Errores.append('referencia')
                     else:
                         Errores.append('error')
-                        Reconocer = False
+                       
                     #print(referencia)  
 
                 for emit in dte.iter('NIT_EMISOR'):
@@ -48,7 +49,7 @@ def LecturaData():
                         pass
                     else: 
                         Errores.append('nit_emisor')
-                        Reconocer = False
+                       
                     #ValidarNit(emisor)
                     #print(emisor)
 
@@ -58,7 +59,7 @@ def LecturaData():
                         pass
                     else:
                         Errores.append('nit_receptor')
-                        Reconocer = False
+                      
                     #print(receptor)
 
                 for values in dte.iter('VALOR'):
@@ -67,7 +68,7 @@ def LecturaData():
                         valor = float(valor)
                     else:
                         Errores.append('error')
-                        Reconocer = False
+                      
                 
                     #print(valor)
 
@@ -81,13 +82,13 @@ def LecturaData():
                             print("IVA comprobado", iva)
                         else:
                             Errores.append('iva')
-                            Reconocer = False
+                          
                             print("iva malo")
                         #print(impuesto)
 
                     else: 
                         Errores.append('error')
-                        Reconocer = False
+                        
 
                 for tot in dte.iter('TOTAL'):
                     total = (tot.text) #error 
@@ -100,41 +101,58 @@ def LecturaData():
                            print("total comprobado", total)
                         else:
                             Errores.append('total')
-                            Reconocer = False
+                         
                             print("total malo")
                         #print(total)
                     else:
                         Errores.append('error')
-                        Reconocer = False
+                   
                 
                 AgregarData(fecha,Errores,referencia,emisor,receptor,valor,impuesto,total)
             
             """if Reconocer:
                 
-                print("save DTE")
-            else:
-                print("rechazar DTE")"""
+                    print("save DTE")
+                else:
+                    print("rechazar DTE")"""
                  
         print("\nArchivo Cargado con Exito\n")
     except:
         print("Error")
-import collections
+
 #Genrar archivo salida
 def GenrarSalida():
     global Ob_Autorizaciones
+    #root = ET.Element("LISTAAUTORIZACIONES")
+    #ET.SubElement(root, "AUTORIZACION")
+    root = ET.Element("LISTAAUTORIZACIONES")
+    
+   
+  
     for i in Ob_Autorizaciones:
+        Autorizacion = ET.SubElement(root, "AUTORIZACION")
         print("\n")
         print("Autorizacion")
         print(i.fecha)
+        ET.SubElement(Autorizacion, "FECHA").text = str(i.fecha)
         print(i.fact_recibidas)
+        ET.SubElement(Autorizacion, "FACTURAS_RECIBIDAS").text = str(i.fact_recibidas)
         print("Errores")
+        Errores = ET.SubElement(Autorizacion, "ERRORES")
         print(i.nit_Emisor)
+        ET.SubElement(Errores, "NIT_EMISOR").text = str(i.nit_Emisor)
         print(i.nit_Receptor)
+        ET.SubElement(Errores, "NIT_RECEPTOR").text = str(i.nit_Receptor)
         print(i.iva)
+        ET.SubElement(Errores, "IVA").text = str(i.iva)
         print(i.total)
+        ET.SubElement(Errores, "TOTAL").text = str(i.total)
         print(i.ref_duplicada)
+        ET.SubElement(Errores, "REFERENCIA_DUPLICADA").text = str(i.ref_duplicada)
         print("Correctas")
+        ET.SubElement(Autorizacion, "FACTURAS_CORRECTAS").text = str(i.fact_correctas)
         print(i.fact_correctas)
+
         
         Emisores = []
         Receptores = []
@@ -145,8 +163,35 @@ def GenrarSalida():
             emisions = collections.Counter(Emisores)
             receptions = collections.Counter(Receptores)
 
+        ET.SubElement(Autorizacion, "CANTIDAD_EMISORES").text = str(len(emisions))
+        ET.SubElement(Autorizacion, "CANTIDAD_RECEPTORES").text = str(len(receptions))
         print(len(emisions))
         print(len(receptions))
+        ListAutorazcion = ET.SubElement(Autorizacion, "LISTADO_AUTORIZACIONES")
+
+        for x in i.listado_autorizaiones:
+            aprobacion = ET.SubElement(ListAutorazcion, "APROBACION")
+            ET.SubElement(aprobacion, "NIT_EMISOR",ref=x.referencia).text = str(x.emisor)
+            ET.SubElement(aprobacion, "CODIGO_APROBACION").text = str(x.Noaprobacion)
+
+    def Bonito(elemento, identificador='  '):
+        validar = [(0, elemento)]  
+
+        while validar:
+            level, elemento = validar.pop(0)
+            children = [(level + 1, child) for child in list(elemento)]
+            if children:
+                elemento.text = '\n' + identificador * (level+1)  
+            if validar:
+                elemento.tail = '\n' + identificador * validar[0][0]  
+            else:
+                elemento.tail = '\n' + identificador * (level-1)  
+            validar[0:0] = children 
+
+        
+    Bonito(root)
+    archio = ET.ElementTree(root) 
+    archio.write("./Salida.xml", encoding='UTF-8')
 
 
 #agregar dara a fecha
