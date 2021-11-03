@@ -1,6 +1,6 @@
 from flask import Flask, Response, request
 from flask_cors import CORS
-from LecturaData import LecturaData
+from LecturaData import LecturaData,GenrarSalida
 
 
 app = Flask(__name__)
@@ -30,7 +30,7 @@ def post_events():
 def get_events():
     
     data = open('data.xml', 'r',encoding="utf-8").read()
-  
+    GenrarSalida()
     return Response(response=data,
                     mimetype='text/plain',
                     content_type='text/plain')
