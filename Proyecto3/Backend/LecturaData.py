@@ -119,7 +119,7 @@ def LecturaData():
         print("\nArchivo Cargado con Exito\n")
     except:
         print("Error")
-
+from lxml import etree
 #Genrar archivo salida
 def GenrarSalida():
     global Ob_Autorizaciones
@@ -192,7 +192,9 @@ def GenrarSalida():
     Bonito(root)
     archio = ET.ElementTree(root) 
     archio.write("./Salida.xml", encoding='UTF-8')
-
+    xml_str = ElementTree.tostring(root).decode()
+    return xml_str
+from xml.etree import ElementTree
 
 #agregar dara a fecha
 def AgregarData(fecha,Errores,referencia,emisor,receptor,valor,impuesto,total):

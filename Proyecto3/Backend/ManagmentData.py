@@ -29,11 +29,10 @@ def post_events():
 @app.route('/events/', methods=['GET'])
 def get_events():
     
-    data = open('data.xml', 'r',encoding="utf-8").read()
-    GenrarSalida()
-    return Response(response=data,
-                    mimetype='text/plain',
-                    content_type='text/plain')
+    data = open('Salida.xml', 'r',encoding="utf-8").read()
+    data = GenrarSalida()
+    #print(data)
+    return Response(response=data)
 
 
 if __name__ == '__main__':
