@@ -19,11 +19,11 @@ from Frontend.views import textvaribles,calculaEdad, despedida, saludo,dameFecha
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('saludo/', saludo),
+    path('Resumen_Rango_Iva_Fecha/', saludo),
     path('despedida/', despedida),
     path('fecha/', dameFecha),
     path('edades/<int:edad>/<int:year>', calculaEdad),
-    path('curriculum/', curriculum),
+    path('resumen_Iva_Fecha/', curriculum),
     path('curriculumNew/', curriculumNew),
     path('varibles/', textvaribles),
     path('Main/', VistaPrinciapl),

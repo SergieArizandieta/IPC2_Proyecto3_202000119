@@ -13,29 +13,17 @@ class Persona(object):
 
 def saludo(request):
 
-    return HttpResponse("""
-    <html>
-    <body>
-    <h1> Hola alumnos esta es nuestra primera pagina con Fjango</h1>
-    </body>
-    </html>
-    
-    """)
+    diccionario = {} 
+    return render(request,"Resumen_Rango_Iva_Fecha.html",diccionario)
 
 def curriculum(request):
 
-    doc_externo=open("./Frontend/Plantillas/Curiculum/curriculum.html")
-    plt = Template(doc_externo.read())
-    doc_externo.close()
+    diccionario = {} 
+    return render(request,"ResumenIva_Fecha.html",diccionario)
 
-    ctx = Context()
 
-    documento = plt.render(ctx)
-
-    return HttpResponse(documento)
 
 def curriculumNew(request):
-
     diccionario = {} 
     return render(request,"curriculumNew.html",diccionario)
 

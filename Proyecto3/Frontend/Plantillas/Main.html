@@ -61,7 +61,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" href="#" onclick="recuperar()">
                 <span>Consultar Datos</span>
               </a>
             </li>
@@ -70,7 +70,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" href="http://localhost:8000/resumen_Iva_Fecha/">
                 <span>Resumen de IVA por fecha y NIT</span>
               </a>
             </li>
@@ -79,7 +79,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" href="http://localhost:8000/Resumen_Rango_Iva_Fecha/">
                 <span>Resumen por rango de fechas</span>
               </a>
             </li>
@@ -118,7 +118,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" href="http://localhost:8000/curriculumNew/"  target="_blank">
                 <span>visualizar información del estudiante</span>
               </a>
             </li>
@@ -171,6 +171,11 @@
             </a>
           </li>
 
+          <li class="nav-item dropdown">
+            <a class="nav-link nav-icon">
+              <button id="botonPDF" type="submit" class="btn btn-success rounded-pill"  >PDF</button>
+            </a>
+          </li>
           <!-- <li class="nav-item dropdown">
             <a class="nav-link nav-icon">
               <button id="get-button">Recibir información</button>
@@ -255,6 +260,28 @@
       let post_form = document.getElementById("post-form");
       let get_button = document.getElementById("get-button");
       let messages = document.getElementById("Exditor_Salida");
+      let botonPDF = document.getElementById("botonPDF");
+
+      botonPDF.addEventListener("click", (e) => {
+
+        e.preventDefault();
+        console.log("Exito")
+          
+          fetch("http://localhost:5000/eventsPDF/", {
+            method: "GET",
+            headers: {
+              "Content-Type": "text/plain",
+            },
+          })
+            .then((res) => {
+              if (res.ok) {
+                return res.text();
+              }
+            })
+            .then((res_txt) => {
+              alert("Solicitud de PDF enviada");
+            });
+        });
 
       post_form.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -266,9 +293,9 @@
           body: post_form.elements["api-info"].value,
         }).then((res) => {
           if (res.ok) {
-            recuperar()
+            alert("Solicitud de autorizacion enviada")
+            //recuperar()
             console.log("Enviado")
-            
           }
         });
       });

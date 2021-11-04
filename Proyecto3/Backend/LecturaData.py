@@ -3,6 +3,8 @@ import re
 from Autorizaciones import Autorizasiones,DTE_individual
 import collections
 import xml.etree.cElementTree as ETS
+from tabla import tablas
+import webbrowser
 
 Ob_Autorizaciones = []
 
@@ -120,6 +122,25 @@ def LecturaData():
     except:
         print("Error")
 from lxml import etree
+
+
+def GenrarSalidaPDF(data):
+    global Ob_Autorizaciones
+    dataNew = data.split("\n")
+    
+    arreglo = []
+    
+    for i in dataNew:
+        temp = []
+        temp.append(i)
+        #print(temp)
+        arreglo.append(temp)
+    
+    tablas(arreglo,'ResumenPorRangos.pdf')
+    path = 'ResumenPorRangos.pdf'
+    webbrowser.open_new(path)
+    
+
 #Genrar archivo salida
 def GenrarSalida():
     global Ob_Autorizaciones
@@ -127,8 +148,6 @@ def GenrarSalida():
     #ET.SubElement(root, "AUTORIZACION")
     root = ET.Element("LISTAAUTORIZACIONES")
     
-   
-  
     for i in Ob_Autorizaciones:
         Autorizacion = ET.SubElement(root, "AUTORIZACION")
         print("\n")
@@ -191,7 +210,7 @@ def GenrarSalida():
         
     Bonito(root)
     archio = ET.ElementTree(root) 
-    archio.write("./Salida.xml", encoding='UTF-8')
+    archio.write("./Autorizaciones.xml", encoding='UTF-8')
     xml_str = ElementTree.tostring(root).decode()
     return xml_str
 from xml.etree import ElementTree

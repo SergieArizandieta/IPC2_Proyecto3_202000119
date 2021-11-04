@@ -1,0 +1,276 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Components / Accordion - NiceAdmin Bootstrap Template</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  
+  <link href=" {% static 'bootstrap.min.css' %}" rel="stylesheet">
+
+
+  <!-- Template Main CSS File -->
+  <link href=" {% static 'style.css' %}" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: NiceAdmin - v2.1.0
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+ 
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+
+
+
+      </ul>
+    </nav>
+
+  </header><!-- End Header -->
+
+
+  
+
+  <main id="main" class="main">
+
+
+ 
+
+    <div class="pagetitle">
+      <h1>Resumen de IVA por fecha y NIT</h1>
+
+    </div><!-- End Page Title -->
+
+
+    <form id="post-form">
+      <!-- ======= Header Buttons ======= -->
+    <nav class="d-flex align-items-center">
+
+      <nav class="header-nav ms-auto">
+        <ul class="d-flex align-items-center">
+
+          <li class="nav-item dropdown">
+            <a class="nav-link nav-icon">
+              <input id="date" type="date">
+            </a>
+          </li>
+          
+          <li class="nav-item dropdown">
+            <a class="nav-link nav-icon">
+              <input id="nit" type="text">
+            </a>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link nav-icon">
+              <button id="botonenvio" type="submit" class="btn btn-success rounded-pill"  >Enviar</button>
+            </a>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link nav-icon">
+              <button id="botonPDF" type="submit" class="btn btn-success rounded-pill"  >PDF</button>
+            </a>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link nav-icon">
+              <button id="botonGrafica" type="submit" class="btn btn-success rounded-pill"  >Grafica</button>
+            </a>
+          </li>
+
+
+          <!-- <li class="nav-item dropdown">
+            <a class="nav-link nav-icon">
+              <button id="get-button">Recibir información</button>
+            </a>
+          </li>-->
+
+          <li class="nav-item dropdown">
+            <a class="nav-link nav-icon">
+              <button type="button" class="btn btn-danger rounded-pill" id= "Limpiar" onclick="botonLimpiar()">Limpiar casillas</button>
+            </a>
+          </li>
+
+        </ul>
+      </nav>
+
+    </nav><!-- End Header Buttons -->
+
+
+          <div class="col-lg-6">
+
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Salida</h5>
+
+
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title"></h5>
+    
+                    <textarea disabled style=" width: 100%;" rows="20"  id= "Exditor_Salida">{{data}}</textarea>
+          
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+    </form>
+
+  </main><!-- End #main -->
+  <li class="nav-item dropdown">
+    <a class="nav-link nav-icon" href="http://localhost:8000/Main/">
+      <button type="submit" class="btn btn-success rounded-pill" >Regresar pagina principal</button>
+    </a>
+  </li>
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="copyright">
+      &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+    </div>
+    <div class="credits">
+      Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+    </div>
+  </footer><!-- End Footer -->
+
+  
+ <!-- Scrips-->
+  <script src="  {% static 'bootstrap.bundle.js' %}"></script>
+  <script src=" {% static 'javas.js' %}" ></script>
+
+
+
+    <!-- Scrip para fromulario-->
+    <script>
+      let buton = document.getElementById("botonenvio");
+      let botonPDF = document.getElementById("botonPDF");
+      let botonGrafo = document.getElementById("botonGrafica");
+      let messages = document.getElementById("Exditor_Salida");
+
+      botonGrafo.addEventListener("click", (e) => {
+
+          e.preventDefault();
+              let date = document.getElementById("date");
+              let nit = document.getElementById("nit");
+              let Data ={
+                  'nit': nit.value,
+                  'date': date.value,
+                  
+              }
+              console.log(Data)
+              fetch('http://localhost:5000/resume_Iva_FechaGrafo/',{
+                  method: 'POST',
+                  body:JSON.stringify(Data),
+                  headers:{
+                      'Content-Type':'application/json',
+                      'Access-Control-Allow-Origin':'*'
+                  }
+              }).then(res=>res.json()).catch(err=>{
+                  console.log('Ocurrio un error');
+              }).then(response=>{
+                alert("Solicitud de grafo enviada");
+              });
+              
+          });
+
+      botonPDF.addEventListener("click", (e) => {
+
+          e.preventDefault();
+              let date = document.getElementById("date");
+              let nit = document.getElementById("nit");
+              let Data ={
+                  'nit': nit.value,
+                  'date': date.value,
+                  
+              }
+              console.log(Data)
+              fetch('http://localhost:5000/resume_Iva_FechaPDF/',{
+                  method: 'POST',
+                  body:JSON.stringify(Data),
+                  headers:{
+                      'Content-Type':'application/json',
+                      'Access-Control-Allow-Origin':'*'
+                  }
+              }).then(res=>res.json()).catch(err=>{
+                  console.log('Ocurrio un error');
+              }).then(response=>{
+                alert("Solicitud de PDF enviada");
+              });
+              
+          });
+
+      buton.addEventListener("click", (e) => {
+
+        e.preventDefault();
+            let date = document.getElementById("date");
+            let nit = document.getElementById("nit");
+            let Data ={
+                'nit': nit.value,
+                'date': date.value,
+                
+            }
+            console.log(Data)
+            fetch('http://localhost:5000/resume_Iva_Fecha/',{
+                method: 'POST',
+                body:JSON.stringify(Data),
+                headers:{
+                    'Content-Type':'application/json',
+                    'Access-Control-Allow-Origin':'*'
+                }
+            }).then(res=>res.json()).catch(err=>{
+                console.log('Ocurrio un error');
+            }).then(response=>{
+                messages.value = response.mensaje
+                alert("Solicitud de Resumen enviada");
+            });
+            
+      });
+
+
+   
+      /*get_button.addEventListener("click", (e) => {
+        e.preventDefault();
+        fetch("http://localhost:5000/events/", {
+          method: "GET",
+          headers: {
+            "Content-Type": "text/plain",
+          },
+        })
+          .then((res) => {
+            if (res.ok) {
+              return res.text();
+            }
+          })
+          .then((res_txt) => {
+            messages.innerText = res_txt;
+          });
+      });*/
+    </script>
+
+</body>
+
+</html>
