@@ -7,6 +7,9 @@ import webbrowser
 
 import matplotlib.pyplot as plt
 
+def limpiar():
+    LD.Ob_Autorizaciones[:] = []
+    print(LD.Ob_Autorizaciones,"Arreglo")
 
 def genrarGRAFPRango(fechaS,FechaF,op):
     try: 
@@ -152,10 +155,6 @@ def GenerarGrafo(fecha,nit):
         print("La creación del Reporte falló")
     else:
          print("Se ha creado el Reporte Token" )
-
-  
-
-    
 
 def genrarPDFRango(fechaS,FechaF,op):
     fechaInicio = LecturafechaEntrada(fechaS)

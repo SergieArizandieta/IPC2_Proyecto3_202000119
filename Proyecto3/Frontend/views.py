@@ -34,28 +34,8 @@ def VistaPrinciapl(request):
 
 def textvaribles(request):
 
-    p1 = Persona("Estudainte Sergie", "Arizandieta")
-   # temas = []
-    temas = ["Plantillas","Modelos","Formularios","Vistas","Despligue"]
-    #nombre = "Sergie"
-    #apellido = "Arizandieta"
-    fecha_actual = datetime.datetime.now()
-
-    #doc_externo=open("./Frontend/Plantillas/Test/index.html")
-    #plt = Template(doc_externo.read())
-    #doc_externo.close()
-    #documento = plt.render(ctx)
-
-    #ctx = Context({"nombre_persona":nombre,"apellido_persona":apellido,"Fecha_actual":fecha_actual } )
-    #ctx = Context({"nombre_persona":p1.nombre,"apellido_persona":p1.apellido,"Fecha_actual":fecha_actual, "temas": temas } )
-    #documento = doc_externo.render(ctx)
-
-    #doc_externo = get_template('test.html')
-    #ctx = {"nombre_persona":p1.nombre,"apellido_persona":p1.apellido,"Fecha_actual":fecha_actual, "temas": temas } 
-    #documento = doc_externo.render(ctx)
-   
-    diccionario = {"nombre_persona":p1.nombre,"apellido_persona":p1.apellido,"Fecha_actual":fecha_actual, "temas": temas } 
-    return render(request,"test.html",diccionario)
+    diccionario = {} 
+    return render(request,"documentation.html",diccionario)
 
 def despedida(request):
 

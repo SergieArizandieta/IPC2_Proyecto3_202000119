@@ -127,7 +127,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center"href="http://localhost:8000/documentacion/"  target="_blank">
                 <span>visualizar la documentación del programa</span>
               </a>
             </li>
@@ -261,7 +261,30 @@
       let get_button = document.getElementById("get-button");
       let messages = document.getElementById("Exditor_Salida");
       let botonPDF = document.getElementById("botonPDF");
+      let cleaner = document.getElementById("Limpiar");
 
+      cleaner.addEventListener("click", (e) => {
+
+        e.preventDefault();
+        console.log("Exito")
+          
+          fetch("http://localhost:5000/eventsCleaner/", {
+            method: "GET",
+            headers: {
+              "Content-Type": "text/plain",
+            },
+          })
+            .then((res) => {
+              if (res.ok) {
+                return res.text();
+              }
+            })
+            .then((res_txt) => {
+              alert("Limpiar data");
+            });
+        });
+
+     
       botonPDF.addEventListener("click", (e) => {
 
         e.preventDefault();

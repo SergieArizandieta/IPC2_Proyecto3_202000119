@@ -25,6 +25,6 @@ urlpatterns = [
     path('edades/<int:edad>/<int:year>', calculaEdad),
     path('resumen_Iva_Fecha/', curriculum),
     path('curriculumNew/', curriculumNew),
-    path('varibles/', textvaribles),
+    path('documentacion/', textvaribles),
     path('Main/', VistaPrinciapl),
 ]

@@ -4,7 +4,7 @@ from LecturaData import LecturaData,GenrarSalida,GenrarSalidaPDF
 import json
 import pdfkit
 import webbrowser
-from Operaciones import ResumenIVAfechaNIT,genrarPDFechaNit,GenerarGrafo,genrarGRAFPRango,ResumenPorRango,genrarPDFRango
+from Operaciones import limpiar,ResumenIVAfechaNIT,genrarPDFechaNit,GenerarGrafo,genrarGRAFPRango,ResumenPorRango,genrarPDFRango
 app = Flask(__name__)
 
 cors = CORS(app, resources={r"/*": {"origin": "*"}})
@@ -13,10 +13,10 @@ cors = CORS(app, resources={r"/*": {"origin": "*"}})
 @app.route ("/resume_rango_Iva_FechaGrafoPDF/", methods=['POST'])
 def resume_rango_Iva_FechaGrafoPDF():
     
-    #pdfkit.from_url('./ResumenRango.HTML', 'ResumenRango.pdf')
+ 
     
 
-    pdfkit.from_file('ResumenRango.html', 'out.pdf')
+    pdfkit.from_file('ResumenRango.html', 'sample.pdf') 
     path = 'ResumenRango.pdf'
     webbrowser.open_new(path)
 
@@ -81,6 +81,12 @@ def resume_Iva_Fecha():
     response =  ResumenIVAfechaNIT(fecha,nit)
     respuesta = jsonify ({"error": False, "mensaje": response})
     return (respuesta)
+
+
+@app.route('/eventsCleaner/', methods=['GET'])
+def eventsCleaner():
+    limpiar()
+    return Response(response='Limpiar')
 
 @app.route('/events/', methods=['POST'])
 def post_events():
