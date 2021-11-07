@@ -4,6 +4,7 @@ import LecturaData as LD
 import pandas as pd
 from tabla import tablas
 import webbrowser
+import datetime
 
 import matplotlib.pyplot as plt
 
@@ -31,7 +32,8 @@ def genrarGRAFPRango(fechaS,FechaF,op):
         yearFinal = int(fechaFinal[6: 10])
         data = []
         df = ""
-        
+        first_date = datetime.date(yearInicio, mesInicio, diaIncio)
+        finish_date = datetime.date(yearFinal, mesFinal, diaFinal)
         cadena = ""
         
         if op == "Total":
@@ -40,27 +42,29 @@ def genrarGRAFPRango(fechaS,FechaF,op):
             cadena = "Resumen por fechas y Valor sin Iva"
         
         df += cadena + "\n"
-    
+        temp = 0
         for i in LD.Ob_Autorizaciones:
             diaTemp = int(i.fecha[0: 2])
             mesTemp = int(i.fecha[3: 5])
             yearTemp = int(i.fecha[6: 10])
-
-            if diaTemp >= diaIncio and diaTemp <= diaFinal:
-                if mesTemp >= mesInicio and mesTemp <= mesFinal:
-                    if yearTemp >= yearInicio and yearTemp <= yearFinal:
+            now_date = datetime.date(yearTemp, mesTemp, diaTemp)
+            if now_date >= first_date and now_date <= finish_date:
+                
                         
                     
                         eje_x.append(i.fecha)
                         if i.listado_autorizaiones != []:
                             for x in i.listado_autorizaiones: 
                                 if op == "Total":
+                                    temp += float(x.total)
                                 
-                                    eje_y.append(x.total)
+                                    
                                 elif op == "SinIva":
-                            
-                                    eje_y.append(x.valor)
-
+                                    temp += float(x.valor)
+                                
+                            eje_y.append(temp)
+                            temp = 0
+                           
                         else:
                         
                             eje_y.append(0)
@@ -162,14 +166,15 @@ def genrarPDFRango(fechaS,FechaF,op):
     fechaFinal = LecturafechaEntrada(FechaF)
     fechaFinal = fechaFinal.replace(" ","")
     op = op.replace(" ","")
-
+    
     diaIncio = int(fechaInicio[0: 2])
     mesInicio = int(fechaInicio[3: 5])
     yearInicio = int(fechaInicio[6: 10])
-   
+    first_date = datetime.date(yearInicio, mesInicio, diaIncio)
     diaFinal = int(fechaFinal[0: 2])
     mesFinal = int(fechaFinal[3: 5])
     yearFinal = int(fechaFinal[6: 10])
+    finish_date = datetime.date(yearFinal, mesFinal, diaFinal)
     data = []
     df = ""
     
@@ -183,25 +188,32 @@ def genrarPDFRango(fechaS,FechaF,op):
     df += cadena + "\n"
     Encabezados= []
     Data = []
+    temp = 0
     for i in LD.Ob_Autorizaciones:
         diaTemp = int(i.fecha[0: 2])
         mesTemp = int(i.fecha[3: 5])
         yearTemp = int(i.fecha[6: 10])
-
-        if diaTemp >= diaIncio and diaTemp <= diaFinal:
-            if mesTemp >= mesInicio and mesTemp <= mesFinal:
-                if yearTemp >= yearInicio and yearTemp <= yearFinal:
+        now_date = datetime.date(yearTemp, mesTemp, diaTemp)
+        print(now_date)
+        print(first_date)
+        print(finish_date)
+        if now_date >= first_date and now_date <= finish_date:
+            
                     
                     Encabezados.append(i.fecha )
                     
                     if i.listado_autorizaiones != []:
                         for x in i.listado_autorizaiones: 
                             if op == "Total":
-                                Data.append(x.total)
-                            
+                                temp += float(x.total)
+                                
+                                print(df)
                             elif op == "SinIva":
-                                Data.append(x.valor)
-
+                                temp += float(x.valor)
+                                
+                        Data.append(temp)
+                        temp = 0
+             
                     else:
                         Data.append(0)
 
@@ -231,7 +243,9 @@ def ResumenPorRango(fechaS,FechaF,op):
     diaFinal = int(fechaFinal[0: 2])
     mesFinal = int(fechaFinal[3: 5])
     yearFinal = int(fechaFinal[6: 10])
-    
+    first_date = datetime.date(yearInicio, mesInicio, diaIncio)
+    finish_date = datetime.date(yearFinal, mesFinal, diaFinal)
+
     df = ""
     
     cadena = ""
@@ -242,26 +256,28 @@ def ResumenPorRango(fechaS,FechaF,op):
         cadena = "Resumen por fechas y Valor sin Iva"
     
     df += cadena + "\n"
-
+    temp = 0
     for i in LD.Ob_Autorizaciones:
         diaTemp = int(i.fecha[0: 2])
         mesTemp = int(i.fecha[3: 5])
         yearTemp = int(i.fecha[6: 10])
-
-        if diaTemp >= diaIncio and diaTemp <= diaFinal:
-            if mesTemp >= mesInicio and mesTemp <= mesFinal:
-                if yearTemp >= yearInicio and yearTemp <= yearFinal:
-                    
+        now_date = datetime.date(yearTemp, mesTemp, diaTemp)
+        if now_date >= first_date and now_date <= finish_date:
+         
                     
                     df += i.fecha + ":\t"
+                    
                     if i.listado_autorizaiones != []:
                         for x in i.listado_autorizaiones: 
                             if op == "Total":
-                                df += str(x.total) + "\n"
-                               
+                                temp += float(x.total)
+                                
+                                print(df)
                             elif op == "SinIva":
-                                df += str(x.valor) + "\n"
-                              
+                                temp += float(x.valor)
+                                
+                        df += str(temp) + "\n"
+                        temp = 0      
                     else:
                         df += str(0) + "\n"
     
@@ -321,17 +337,20 @@ def ResumenIVAfechaNIT(fecha,nit):
     validacion = False
     
     for i in LD.Ob_Autorizaciones:
+        
         if i.fecha == fechaNew:
             
             if i.listado_autorizaiones != []:
+                    
                     for x in i.listado_autorizaiones:
+                        
                         if nit == x.emisor:
                            ivaEmitido += x.impuesto
                            validacion = True
                         elif nit == x.receptor:
                             ivaRecibido += x.impuesto
                             validacion = True
-            break
+            
     
     if validacion:
         text = "Fecha: " + str(fechaNew) + "\nNit: " + str(nit) + "\nIva Emitido: " + str(ivaEmitido)+ "\nIva Recibido: " + str(ivaRecibido)

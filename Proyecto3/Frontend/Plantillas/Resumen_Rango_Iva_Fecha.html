@@ -182,36 +182,7 @@
       let botonPDF = document.getElementById("botonPDF");
       let messages = document.getElementById("Exditor_Salida");
       let botonGrafo = document.getElementById("botonGrafica");
-      let botonGrafoPDF = document.getElementById("botonGraficaPDF");
-
-      botonGrafoPDF.addEventListener("click", (e) => {
-
-        e.preventDefault();
-            let dateS = document.getElementById("dateInicio");
-            let dateF = document.getElementById("dateFin");
-            let option = document.getElementById("selector");
-            let Data ={
-                'dateInicio': dateS.value,
-                'dateFin': dateF.value,
-                'Opcion': option.value,
-                
-            }
-            console.log(Data)
-            fetch('http://localhost:5000/resume_rango_Iva_FechaGrafoPDF/',{
-                method: 'POST',
-                body:JSON.stringify(Data),
-                headers:{
-                    'Content-Type':'application/json',
-                    'Access-Control-Allow-Origin':'*'
-                }
-            }).then(res=>res.json()).catch(err=>{
-                console.log('Ocurrio un error');
-            }).then(response=>{
-                
-                alert("Solicitud de PDF enviada");
-            });
-            
-        });
+      
 
 
       botonGrafo.addEventListener("click", (e) => {
